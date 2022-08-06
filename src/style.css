@@ -44,6 +44,22 @@ h1 {
   text-align: center;
 }
 
+#gamecanvas {
+  width: 320px;
+  height: 480px;
+  background-color: lightblue;
+  border: 5px solid red;
+}
+
+#playingsurface {
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color: #cccccc;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;

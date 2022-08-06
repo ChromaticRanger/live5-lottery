@@ -8,11 +8,12 @@ import { CanvasManager } from '../managers/canvasmanager'
 // will be made up of:
 //   Game
 //     Board
-//       Background color 
-//       Foreground value
-//       Decoration.
+//       Ball
+//         Background color 
+//         Foreground value
+//         Decoration.
 //
-// Each of those classes will implement this draw method.
+// Each of these classes will implement this draw method.
 //
 export interface IGame {
     draw(cm: CanvasManager): void

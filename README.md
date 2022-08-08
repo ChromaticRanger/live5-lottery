@@ -19,6 +19,7 @@ Unfortunately not all requirements have been completed. Simply ran out of time.
 ## Not yet working
 1. Calculation of matching balls and prize
 2. Showing prize on the screen
+3. Some UI flow is not there. I.E you can start before you have chosen balls.
 
 ## Design notes
 1. Generally an Object Oriented solution using Typescipt and classes

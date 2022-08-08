@@ -21,6 +21,8 @@ export function activate (
 ) 
 {
 
+  start!.disabled = true
+
   let context:CanvasRenderingContext2D | null = gameCanvas!.getContext("2d")
   let drawncontext:CanvasRenderingContext2D | null = drawncanvas!.getContext("2d")
 
@@ -33,8 +35,48 @@ export function activate (
 
   game!.draw(GameFactory.manager)
 
+  //
+  // RESET 
+  // reset all game state back to the beginning
+  //
+  reset?.addEventListener('click', () => {
+    game?.reset()
+    game?.draw(GameFactory.manager)
+    drawncontext!.clearRect(0, 0, drawncontext!.canvas.width, drawncontext!.canvas.height); 
+    start!.disabled = true
+    lucky!.disabled = false
+  })
+  
+  //
+  // LUCKY DIP
+  // Choose 6 random balls for the player
+  // This will remove and override any manual balls they may have already picked
+  //
+  lucky?.addEventListener('click', () => {
+
+    // clear any currently selected balls
+    game?.clearSelectedBalls()
+    
+    let nums: Set<number> = drawSixBalls()
+    let balls: Set<LotteryBall> | null | undefined = game?.board.getBallsAt(nums)
+
+    // active all 6 balls
+    balls?.forEach(ball => {
+      ball.transitionTo(new ActiveBallState())
+      game?.addSelectedBall(ball!)
+    })
+
+    start!.disabled = false
+      
+    game?.draw(GameFactory.manager)
+
+  })
+
+  //
+  // START
   // If game state is ready, draw the 6 play balls
-  start?.addEventListener('click', () => {
+  //
+  start!.addEventListener('click', () => {
     
     game?.clearDrawnBalls()
 
@@ -66,38 +108,18 @@ export function activate (
     // TODO: calculate score
     // TODO: show score
 
+    start!.disabled = true
+    lucky!.disabled = true
+
     // redraw game
     game?.draw(GameFactory.manager)
 
   })
 
-  // Reset all game state back to the beginning
-  reset?.addEventListener('click', () => {
-    game?.reset()
-    game?.draw(GameFactory.manager)
-    drawncontext!.clearRect(0, 0, drawncontext!.canvas.width, drawncontext!.canvas.height); 
-  })
-  
-  // Choose 6 random balls for the player
-  // This will remove and override any manual balls they may have already picked
-  lucky?.addEventListener('click', () => {
-
-    // clear any currently selected balls
-    game?.clearSelectedBalls()
-    
-    let nums: Set<number> = drawSixBalls()
-    let balls: Set<LotteryBall> | null | undefined = game?.board.getBallsAt(nums)
-
-    // active all 6 balls
-    balls?.forEach(ball => {
-      ball.transitionTo(new ActiveBallState())
-      game?.addSelectedBall(ball!)
-    })
-      
-    game?.draw(GameFactory.manager)
-
-  })
-
+  //
+  // USER SELECTION
+  // user selected balls manually in the canvas
+  //
   gameCanvas?.addEventListener('mousedown', (evt) => {
     // highlight the ball that was selected
     let rect = gameCanvas.getBoundingClientRect()
@@ -111,21 +133,25 @@ export function activate (
         // Activate ball and store it in game selected array
         // but only if there is space in the games selected ball
         // array
-        if (game?.SelectedBallCount() < 6) {
+        if (game!.SelectedBallCount() < 6) {
           ball?.transitionTo(new ActiveBallState())
           game?.addSelectedBall(ball!)
         }
+        if (game!.SelectedBallCount() === 6) {
+          // activate start button
+          start!.disabled = false
+        }
       }
       else {
-        // Deactivate ball and remove it from the game selected aray
+        // Deactivate ball and remove it from the game selected set
+        start!.disabled = true
         ball?.transitionTo(new PassiveBallState())
         game?.removeSelectedBall(ball!)
       }
 
+      // redraw after state changes
       game?.draw(GameFactory.manager)
     }
-    
-    // console.log(ball)
 
   })
 

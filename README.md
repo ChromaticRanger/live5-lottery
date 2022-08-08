@@ -17,7 +17,7 @@ Unfortunately not all requirements have been completed. Simply ran out of time.
 6. Reset button clears all data structures and screen
 
 ## Not yet working
-1. Calculation of matches balls and prize
+1. Calculation of matching balls and prize
 2. Showing prize on the screen
 
 ## Design notes

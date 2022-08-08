@@ -5,6 +5,7 @@ import { IGame } from '../interfaces/IGame'
 import { GameType } from './gametypes'
 import { LotteryBall } from './lotteryball'
 import { PassiveBallState } from './ballpassivestate'
+import { PrizePot } from './BallData'
 
 export class LotteryGame implements IGame {
 
@@ -75,6 +76,60 @@ export class LotteryGame implements IGame {
         ball.transitionTo(new PassiveBallState())
       })
       this.drawn = new Set<LotteryBall>()
+    }
+
+    //
+    // Look at each set of balls and calculate the prize won if any
+    //
+    public calculatePrize(): PrizePot {
+
+      // check how many balls in 'drawn' and 'selected' match
+      let prize: PrizePot = { prize: 0, matches: [] }
+
+      this.drawn.forEach((ball) => {
+        if (this.selected.has(ball)) {
+          prize.matches.push(ball)
+        }
+      })
+
+      switch (prize.matches.length) {
+        /*
+        case 0: {
+          prize = 123456
+          break
+        }
+        case 1: {
+          prize = 111111
+          break
+        }
+        case 2: {
+          prize = 222222
+          break
+        }
+        */
+        case 3: {
+          prize.prize = 50
+          break
+        }
+        case 4: {
+          prize.prize = 100
+          break
+        }
+        case 5: {
+          prize.prize = 200
+          break
+        }
+        case 6: {
+          prize.prize = 500
+          break
+        }
+        default: {
+          prize.prize = 0
+          break
+        }
+      }
+
+      return prize
     }
 
     private clearPrize(): void {

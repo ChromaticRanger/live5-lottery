@@ -105,7 +105,7 @@ export function activate (
     })
 
     const prize: PrizePot = game!.calculatePrize()
-    console.log(`You matched ${prize.matches.length} balls`)
+    console.log(`You matched: ${prize.matches.length}`)
     console.log(`So won: ${prize.prize}`)
     
     // TODO: highlight matched selections

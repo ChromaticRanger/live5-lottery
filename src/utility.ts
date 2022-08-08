@@ -38,7 +38,7 @@ export class SystemColors {
     static BLACK: string = '#000000';
     static RED: string = '#FF0000';
     static ORANGE: string = '#FF4500';
-    static SUCCESS: string = '#22C55E'
+    static SUCCESS: string = '#C29B0C'
     static FAILURE: string = '#EF4444'
 }
 

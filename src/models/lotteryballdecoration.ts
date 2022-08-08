@@ -56,7 +56,7 @@ export class LotteryBallDecoration implements IGame {
           this.ROW_TOTAL,
           this.COL_TOTAL,
           this.BALL_GAP,
-          SystemColors.GREEN
+          SystemColors.SUCCESS
         )
       }
     }
@@ -79,14 +79,30 @@ export class LotteryBallDecoration implements IGame {
       let ball_width = (cm.width / col_total) - ball_gap
       let ball_radius = ball_width / 2
 
-      // Draw a highlight circle in top right corner of ball
-      cm.ctx.save()
-      cm.ctx.translate(ball_radius, ball_radius)
-      cm.ctx.fillStyle = hex_color
-      cm.ctx.beginPath()
-      cm.ctx.arc(start_x, start_y, ball_radius * 2/3, 0, Math.PI * 2)
-      cm.ctx.fill()
-      cm.ctx.restore()
+      
+      if(this.ball.state?.name === 'Active') { 
+        // Draw a highlight circle in the centre of ball
+        cm.ctx.save()
+        cm.ctx.translate(ball_radius, ball_radius)
+        cm.ctx.fillStyle = hex_color
+        cm.ctx.beginPath()
+        cm.ctx.arc(start_x, start_y, ball_radius * 2/3, 0, Math.PI * 2)
+        cm.ctx.lineWidth = 5
+        cm.ctx.fill()
+        cm.ctx.restore()
+      }
+      
+      if(this.ball.state?.name === 'Correct') {
+        // Draw a ring around the edge of the ball
+        cm.ctx.save()
+        cm.ctx.translate(ball_radius, ball_radius)
+        cm.ctx.fillStyle = hex_color
+        cm.ctx.beginPath()
+        cm.ctx.arc(start_x, start_y, ball_radius, 0, Math.PI * 2)
+        cm.ctx.lineWidth = 5
+        cm.ctx.stroke()
+        cm.ctx.restore()
+      }
       
     }
 

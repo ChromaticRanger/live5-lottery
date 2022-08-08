@@ -17,8 +17,7 @@ Unfortunately not all requirements have been completed. Simply ran out of time.
 6. Reset button clears all data structures and screen
 
 ## Not yet working
-1. Calculation of matching balls and prize
-2. Showing prize on the screen
+1. Showing prize on the screen
 
 ## Design notes
 1. Generally an Object Oriented solution using Typescipt and classes

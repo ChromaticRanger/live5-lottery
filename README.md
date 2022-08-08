@@ -6,6 +6,9 @@ Here is my submission of the Live 5 Lottery game challenge.
 1. Clone repo and run ```npm install```
 2. Issue command ```npm run dev``` to launch Vite dev server
 
+## Screenshot
+![alt text](https://github.com/ChromaticRanger/live5-lottery/blob/main/live5.png?raw=true)
+
 ## Implemented
 1. Game board and 1 - 59 balls drawn to screen.
 2. Manual selection and unselection of only 6 balls

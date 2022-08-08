@@ -18,7 +18,8 @@ export function activate (
   reset: HTMLButtonElement | null,
   lucky: HTMLButtonElement | null,
   gameCanvas: HTMLCanvasElement | null,
-  drawncanvas: HTMLCanvasElement | null
+  drawncanvas: HTMLCanvasElement | null,
+  prizemessage: HTMLHeadingElement | null
 ) 
 {
 
@@ -46,6 +47,7 @@ export function activate (
     drawncontext!.clearRect(0, 0, drawncontext!.canvas.width, drawncontext!.canvas.height); 
     start!.disabled = true
     lucky!.disabled = false
+    prizemessage!.innerText = ''
   })
   
   //
@@ -68,7 +70,6 @@ export function activate (
     })
 
     start!.disabled = false
-      
     game?.draw(GameFactory.manager)
 
   })
@@ -79,14 +80,22 @@ export function activate (
   //
   start!.addEventListener('click', () => {
     
-    game?.clearDrawnBalls()
+    game!.clearDrawnBalls()
 
     // Draw 6 prize balls
     let nums: Set<number> = drawSixBalls()
-    let drawn: Set<LotteryBall> = game?.board.getBallsAt(nums)
-    game?.setDrawnBalls(drawn)
+    let drawn: Set<LotteryBall> = game!.board.getBallsAt(nums)
+    game!.setDrawnBalls(drawn)
 
     drawncontext!.clearRect(0, 0, drawncontext!.canvas.width, drawncontext!.canvas.height); 
+
+    const prize: PrizePot = game!.calculatePrize()
+    if (prize.matches.length > 1 || prize.matches.length === 0) {
+      prizemessage!.innerText = `You matched ${prize.matches.length} balls and win ${prize.prize}`
+    }
+    if (prize.matches.length === 1){
+      prizemessage!.innerText = `You matched ${prize.matches.length} ball and win ${prize.prize}`
+    }
 
     let index = 0
     drawn?.forEach((ball) => {
@@ -96,17 +105,25 @@ export function activate (
       let ball_width = (drawncontext!.canvas.width / 6) - 4
       let ball_radius = ball_width / 2
       drawncontext!.translate(ball_radius, ball_radius)
-      drawncontext!.fillStyle = '#000000'
       drawncontext!.font = `${ball_width / 3}pt Calibri`
       drawncontext!.textAlign = 'center'
       drawncontext!.textBaseline = 'middle'
+      drawncontext!.fillStyle = '#000000'
+      drawncontext!.strokeStyle = '#00FF00'
+      
+      // If a ball was matched highlight it
+      if (prize.matches.includes(ball)) {
+        drawncontext!.beginPath()
+        drawncontext!.arc(start_x, 0, ball_radius, 0, Math.PI * 2)
+        drawncontext!.lineWidth = 5
+        drawncontext!.stroke()
+      }
+
+      drawncontext!.fillStyle = '#000000'
       drawncontext!.fillText(ball.fixed_value?.value!, start_x, 0)
       drawncontext!.restore()
     })
 
-    const prize: PrizePot = game!.calculatePrize()
-    console.log(`You matched ${prize.matches.length} balls`)
-    console.log(`So won: ${prize.prize}`)
     
     // TODO: highlight matched selections
     // TODO: show score

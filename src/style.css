@@ -30,6 +30,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #cccccc;
 }
 
 h1 {
@@ -63,7 +64,7 @@ h1 {
   justify-content: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  background-color: #ffffff;
+  background-color: #cccccc;
 }
 
 button {

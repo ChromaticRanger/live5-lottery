@@ -58,9 +58,11 @@ export class LotteryBall implements IGame {
     // The ball iself with be drawn by its constituent parts
     //
     public draw(cm: CanvasManager) {
-        this.background?.draw(cm)
+      this.background?.draw(cm)
+      // only draw decoration if ball is NOT passive
+      if (this.state?.name !== 'Passive')
         this.decoration?.draw(cm)
-        this.fixed_value?.draw(cm)
+      this.fixed_value?.draw(cm)
     }
 
 }

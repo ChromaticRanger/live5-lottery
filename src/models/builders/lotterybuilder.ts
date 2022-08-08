@@ -34,25 +34,26 @@ export class LotteryBuilder {
           for (let j:number = 0; j < row.length; j++) {         
 
             const ball_data:BallData = data[i][j]
+            // console.log(ball_data.state)
             let ball:LotteryBall = new LotteryBall(
                 board,
-                j, 
                 i, 
-                (ball_data.state) ? new ActiveBallState() : new PassiveBallState()
+                j, 
+                (ball_data.state === 'active') ? new ActiveBallState() : new PassiveBallState()
             )
             ball.addBackground(
                 new LotteryBallBackground(
                     ball, 
-                    SystemColors.WHITE,
-                    ball_data.hexcolor
+                    ball_data.hexcolor,
+                    ball_data.hexcolor,
                 )
             )
             ball.addDecoration(
                 new LotteryBallDecoration(
                     ball, 
                     SystemColors.BLACK, 
+                    SystemColors.RED,
                     "", 
-                    SystemColors.YELLOW
                 )
             )
             ball.addFixedValue(

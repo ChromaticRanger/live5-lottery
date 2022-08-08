@@ -10,11 +10,22 @@ export function translateMouseCoordsToBoardCoords(
     mouse_y: number
 ): Coord {
     // Translate the given mouse coord to cell coordinates
+    // TODO: better take into account where the ball is in this grid position
+    // this is not quite accurate enough
     let col_width: number = canvas_width / cols;
     let row_height: number = canvas_height / rows;
     let cell_x = Math.floor(mouse_x / col_width);
     let cell_y = Math.floor(mouse_y / row_height);
     return new Coord(cell_x, cell_y);
+}
+
+export function drawSixBalls(): Set<number> {
+  // get 6 numbers. we could get the same number so use a set
+  const luckyNums: Set<number> = new Set()
+  while (luckyNums.size < 6) { 
+    luckyNums.add(Math.floor(Math.random() * 59))
+  }
+  return luckyNums
 }
 
 export class SystemColors {
@@ -23,7 +34,7 @@ export class SystemColors {
     static PINK: string = '#FFC0CB';
     static GREEN: string = '#90EE90';
     static YELLOW: string = '#F5F527';
-    static PURPLE: string = '9370DB';
+    static PURPLE: string = '#9370DB';
     static BLACK: string = '#000000';
     static RED: string = '#FF0000';
     static ORANGE: string = '#FF4500';

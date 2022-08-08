@@ -4,7 +4,7 @@ import { SystemColors } from '../utility'
 import { LotteryBuilder } from '../models/builders/lotterybuilder'
 import { CanvasManager } from '../managers/canvasmanager'
 import { GameType } from '../models/gametypes'
-import { IGame } from '../interfaces/IGame'
+import { LotteryGame } from '../models/lotterygame'
 
 // 
 // This class will put together everything needed
@@ -12,16 +12,16 @@ import { IGame } from '../interfaces/IGame'
 // 
 export class GameFactory {
 
-    public static manager: CanvasManager | null = null
+    public static manager: CanvasManager
 
     public static getGame(
         game_type: GameType,
         ctx: CanvasRenderingContext2D,
         width: number,
         height: number
-    ) : IGame | null {
+    ) : LotteryGame | null {
 
-        let game = null
+        let game: LotteryGame | null = null
         let gamedata: BallDataStructure = [
           [
             {value: '1', hexcolor: SystemColors.WHITE, state: 'passive'},

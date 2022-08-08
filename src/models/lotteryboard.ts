@@ -48,7 +48,7 @@ export class LotteryBoard implements IGame {
         ) 
 
         for (const ball of this.balls) {
-            if (ball.x_pos === ball_coords.x && ball.y_pos === ball_coords.y) {
+            if (ball.y_pos === ball_coords.x && ball.x_pos === ball_coords.y) {
                 result = ball
                 break
             }
@@ -56,11 +56,24 @@ export class LotteryBoard implements IGame {
 
         return result
     }
+
+    public getBallsAt(nums: Set<number>): Set<LotteryBall> {
+      const luckyBalls: Set<LotteryBall> = new Set<LotteryBall>()
+      for(let n of nums) {
+        // get the ball at the index
+        luckyBalls.add(this.balls[n])
+      }
+      return luckyBalls
+    }
+
+    public getBallAt(index: number): LotteryBall {
+      return this.balls[index]
+    }
     
     public draw(cm: CanvasManager) {
-        for (const ball of this.balls) {
-            ball.draw(cm)
-        }
+      for (const ball of this.balls) {
+          ball.draw(cm)
+      }
     }
     
 }

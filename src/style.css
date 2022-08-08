@@ -33,31 +33,36 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 3.0em;
+  line-height: 0.8;
 }
 
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
 }
 
 #gamecanvas {
-  width: 320px;
-  height: 480px;
-  background-color: lightblue;
-  border: 5px solid red;
+  background-color: #565656;
+  border: 6px solid black;
+  margin-bottom: 0.5rem;
+}
+
+#drawncanvas {
+  background-color: #ffffff;
+  border: 6px solid black;
 }
 
 #playingsurface {
   display: flex;
+  flex-direction: column;
   place-items: center;
   justify-content: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  background-color: #cccccc;
+  background-color: #ffffff;
 }
 
 button {
